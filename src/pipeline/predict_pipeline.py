@@ -1,8 +1,8 @@
 import sys
+import os
 import pandas as pd
 from src.exception import CustomException
 from src.utils import load_object
-import dill
 
 
 class PredictPipeline:
@@ -11,8 +11,8 @@ class PredictPipeline:
 
     def predict(self,features):
         try:
-            model_path=os.path.join("artifacts","model.pkl")
-            preprocessor_path=os.path.join('artifacts','preprocessor.pkl')
+            model_path=os.path.join("D:\\Data_Science\\Data_Science_Project\\ml_project\\artifacts\\model.pkl")
+            preprocessor_path=os.path.join("D:\\Data_Science\\Data_Science_Project\\ml_project\\artifacts\\proprocessor.pkl")
             print("Before Loading")
             model=load_object(file_path=model_path)
             preprocessor=load_object(file_path=preprocessor_path)
@@ -54,21 +54,15 @@ class CustomData:
         try:
             custom_data_input_dict = {
                 "gender": [self.gender],
-                "race_ethnicity": [self.race_ethnicity],
-                "parental_level_of_education": [self.parental_level_of_education],
+                "race/ethnicity": [self.race_ethnicity],
+                "parental level of education": [self.parental_level_of_education],
                 "lunch": [self.lunch],
-                "test_preparation_course": [self.test_preparation_course],
-                "reading_score": [self.reading_score],
-                "writing_score": [self.writing_score],
+                "test preparation course": [self.test_preparation_course],
+                "reading score": [self.reading_score],
+                "writing score": [self.writing_score],
             }
 
             return pd.DataFrame(custom_data_input_dict)
 
         except Exception as e:
             raise CustomException(e, sys)
-    def load_object(file_path):
-        try:
-            with open(file_path,'rb') as file_obj:
-                return dill.load(file_obj)
-        except Exception as e:
-            raise CustomException(e,sys)
